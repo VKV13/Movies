@@ -1,0 +1,70 @@
+import pandas as pd
+df=pd.read_csv("C:/Users/SREELAKSHMI/Desktop/datas/Miniproject/movies_cleaned_pandas.csv")
+df.columns=['no','movie','year','rating','duration']
+# 1. Find row count
+print("Row count: ")
+print(df.shape[0],"\n\n")
+
+# 2. Remove duplicates and find row count
+df.drop_duplicates()
+print("After removing duplicates and finding row count: ")
+print(df.shape[0],"\n\n")
+
+# 3. Sort data set by release year in des order
+print("Sorted data set by release year in des order: ")
+print(df.sort_values(by='year',ascending=False),"\n\n")
+
+# 4. Find rating mxm 5 movies name,year,rating
+print("Finding rating mxm 5 movies name,year,rating: ")
+print(df.sort_values(by='rating',ascending=False).head()[['movie','year','rating']],"\n\n")
+
+# 5. Find rating minimum 3 movies name,year,rating
+print("Finding rating minimum 3 movies name,year,rating: ")
+print(df.sort_values(by='rating').head(3)[['movie','year','rating']],"\n\n")
+
+# 6. Find Each year release movie count [count desc order]
+print("Finding Each year release movie count [count desc order]: ")
+print(df.groupby('year')['movie'].count(),"\n\n")
+
+# 7. Each rating count [count desc order]
+print("Each rating count [count desc order]: ")
+print(df.groupby('rating')['rating'].count().sort_values(ascending=False),"\n\n")
+
+# 8. 2008 and rating above 3 [collect]
+# A. row count
+print("2008 and rating above 3 [collect]: ")
+print(df.loc[(df['year'] == 2008)&(df['rating']>3)],"\n\n")
+print("Row count: ",df.loc[(df['year'] == 2008)&(df['rating']>3)].shape[0],"\n")
+
+# 9. Find duration mxm 1 movies name,year,rating,duration
+print("Finding duration mxm 1 movies name,year,rating,duration: ")
+print(df.loc[df['rating']<=1][['movie','year','rating','duration']],"\n\n")
+
+# 10. Find rating mnm 1 movies name,year,rating,duration
+print("Finding rating mnm 1 movies name,year,rating,duration: ")
+print(df.loc[df['rating']>=1][['movie','year','rating','duration']],"\n\n")
+
+# 11. Rating above 4 and release year above 2005
+# A. Rating mxm movies full data
+# B. Rating mnm movies full data
+print("Rating above 4 and release year above 2005: ")
+df1=df.loc[(df['year'] > 2005)&(df['rating']>4)]
+print("A. Rating mxm movies full data: ")
+print("Maximum rating:\n",df1.loc[df['rating']==4.5],"\n\n")
+print("B. Rating mnm movies full data: ")
+print("Minimum rating:\n",df1.loc[df['rating']==4.1],"\n\n")
+
+# 12. 2008 movies count
+print("2008 movies count: ")
+df1=df.loc[df['year']==2008]
+print(df1.groupby('year')['movie'].count(),"\n\n")
+
+# 13. 1975-2000 movies collect
+# A. Row count
+print("1975-2000 movies collect, row count: ")
+df1=df.loc[(df['year']>=1975)&(df['year']<=2000)]
+print(df1.shape[0],"\n\n")
+
+# 14. 1975-2000 and rating above 3.5 total row count
+print("1975-2000 and rating above 3.5 total row count: ")
+print(df.loc[(df['year']>=1975)&(df['year']<=2000)&(df['rating']>3.5)].shape[0])
